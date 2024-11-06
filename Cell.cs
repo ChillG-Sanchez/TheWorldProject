@@ -1,41 +1,30 @@
-﻿using System.Collections.Generic;
-using System;
+using System.Collections.Generic;
 
 public class Cell
 {
-    public int X { get; }
-    public int Y { get; }
-    public Plant Plant { get; set; }
-    public List<ICreature> Inhabitants { get; private set; }
+    public int X { get; set; }
+    public int Y { get; set; }
+    public List<Creature> Inhabitants { get; set; } = new List<Creature>();
+    public Plant? Plant { get; set; }
 
     public Cell(int x, int y)
     {
         X = x;
         Y = y;
-        Inhabitants = new List<ICreature>();
     }
 
-    public void AddCreature(ICreature creature)
+    public void AddCreature(Creature creature)
     {
         Inhabitants.Add(creature);
-        creature.CurrentCell = this;
     }
 
-    public void RemoveCreature(ICreature creature)
+    public void RemoveCreature(Creature creature)
     {
         Inhabitants.Remove(creature);
     }
 
-    public Cell GetRandomNeighbor(World world)
+    public void AddPlant(Plant plant)
     {
-        var neighbors = world.GetNeighbors(this);
-        return neighbors[new Random().Next(neighbors.Count)];
-    }
-
-    public override string ToString()
-    {
-        if (Plant != null) return "P";
-        if (Inhabitants.Count > 0) return "C";
-        return ".";
+        Plant = plant;
     }
 }
